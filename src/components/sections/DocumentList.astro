@@ -1,0 +1,47 @@
+---
+import Icon from '../ui/Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { documents } from '../../data/site';
+import type { PortfolioDocument } from '../../data/site';
+
+interface Props {
+  title?: string;
+  intro?: string;
+  items?: PortfolioDocument[];
+  sectionId?: string;
+}
+
+const {
+  title = 'Documents and downloads',
+  intro = 'Centralized downloads make supporting materials easier to review.',
+  items,
+  sectionId,
+} = Astro.props;
+
+const documentItems = items ?? documents;
+const formatCategory = (category: PortfolioDocument['category']) =>
+  `${category.charAt(0).toUpperCase()}${category.slice(1)}`;
+---
+<section class="section-shell shell" id={sectionId}>
+  <SectionHeading eyebrow="Downloads" title={title} intro={intro} />
+  <div class="card-grid card-grid-wide">
+    {documentItems.map((document) => (
+      <article class="glass-card compact-card" data-reveal>
+        <div class="card-topline">
+          <p class="section-eyebrow">{document.type}</p>
+          <span class="tag-chip">{formatCategory(document.category)}</span>
+        </div>
+        <h3>{document.title}</h3>
+        <p>{document.summary}</p>
+        {document.path ? (
+          <a class="button-secondary" href={document.path} target="_blank" rel="noreferrer">
+            <Icon name="download" class="h-4 w-4" />
+            <span>Open document</span>
+          </a>
+        ) : (
+          <p class="status-note">This document is not currently published.</p>
+        )}
+      </article>
+    ))}
+  </div>
+</section>

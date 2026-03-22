@@ -1,0 +1,69 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import ProjectsExplorerClient from './ProjectsExplorerClient';
+import type { PortfolioProject } from '../../data/projects';
+
+interface Props {
+  title: string;
+  intro: string;
+  projects: PortfolioProject[];
+  sectionId?: string;
+  initialCount?: number;
+  detailMode?: boolean;
+  hydrate?: 'visible' | 'load' | 'idle';
+}
+
+const {
+  title,
+  intro,
+  projects,
+  sectionId = 'projects',
+  initialCount = 6,
+  detailMode = false,
+  hydrate = 'visible',
+} = Astro.props;
+const serializedProjects = projects.map((project) => ({
+  slug: project.slug,
+  title: project.title,
+  category: project.category,
+  year: project.year,
+  summary: project.summary,
+  context: project.context,
+  tech: project.tech,
+  imageSrc: project.image.src,
+  code: project.code,
+  demo: project.demo,
+  docker: project.docker,
+  projectType: project.projectType,
+  focusArea: project.focusArea,
+  timeline: project.timeline,
+  role: project.role,
+  features: project.features,
+  reflection: project.reflection,
+}));
+---
+<section class="section-shell shell" id={sectionId}>
+  <SectionHeading eyebrow="Selected work" title={title} intro={intro} />
+  {hydrate === 'load' ? (
+    <ProjectsExplorerClient
+      projects={serializedProjects}
+      detailMode={detailMode}
+      initialCount={initialCount}
+      client:load
+    />
+  ) : hydrate === 'idle' ? (
+    <ProjectsExplorerClient
+      projects={serializedProjects}
+      detailMode={detailMode}
+      initialCount={initialCount}
+      client:idle
+    />
+  ) : (
+    <ProjectsExplorerClient
+      projects={serializedProjects}
+      detailMode={detailMode}
+      initialCount={initialCount}
+      client:visible
+    />
+  )}
+</section>

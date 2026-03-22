@@ -1,0 +1,47 @@
+---
+import '../../styles/global.css';
+import SiteNav from '../nav/SiteNav.astro';
+import DeferredBackground from '../sections/DeferredBackground.astro';
+import { siteMeta } from '../../data/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  currentPath?: string;
+}
+
+const {
+  title = siteMeta.title,
+  description = siteMeta.description,
+  currentPath = '/',
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <DeferredBackground />
+    <div class="page-chrome"></div>
+    <SiteNav currentPath={currentPath} />
+    <main class="page-main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="shell footer-shell">
+        <p>Henrique Custodio portfolio. Static delivery, open-space presentation, and project-focused storytelling.</p>
+        <p>&copy; <span data-current-year></span> Henrique Custodio</p>
+      </div>
+    </footer>
+    <script>
+      import { initSite } from '../../scripts/site';
+      initSite();
+    </script>
+  </body>
+</html>

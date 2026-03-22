@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeading from './SectionHeading.astro';
+import { experiences } from '../../data/site';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  sectionId?: string;
+}
+
+const {
+  eyebrow = 'Professional experience',
+  title = 'Operational depth across cloud, systems, and application support',
+  intro = 'Selected roles across cloud support, Linux systems, and application delivery.',
+  sectionId,
+} = Astro.props;
+---
+<section class="section-shell shell" id={sectionId}>
+  <SectionHeading
+    eyebrow={eyebrow}
+    title={title}
+    intro={intro}
+  />
+  <div class="timeline-grid">
+    {experiences.map((experience) => (
+      <article class="timeline-card" data-reveal>
+        <div class="timeline-head">
+          <div class="timeline-logo">
+            <Image src={experience.logo} alt={experience.company} width={56} height={56} />
+          </div>
+          <div>
+            <h3>{experience.company}</h3>
+            <p>{experience.role}</p>
+            <small>{experience.date} · {experience.location}</small>
+          </div>
+        </div>
+        <ul class="bullet-list compact">
+          {experience.points.map((point) => <li>{point}</li>)}
+        </ul>
+      </article>
+    ))}
+  </div>
+</section>

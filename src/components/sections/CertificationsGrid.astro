@@ -1,0 +1,34 @@
+---
+import SectionHeading from './SectionHeading.astro';
+import { certifications } from '../../data/site';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  sectionId?: string;
+}
+
+const {
+  eyebrow = 'Certifications',
+  title = 'Industry credentials',
+  intro = 'Technical certifications grouped for quick review.',
+  sectionId,
+} = Astro.props;
+---
+<section class="section-shell shell" id={sectionId}>
+  <SectionHeading
+    eyebrow={eyebrow}
+    title={title}
+    intro={intro}
+  />
+  <div class="card-grid card-grid-wide">
+    {certifications.map((certification) => (
+      <article class="glass-card compact-card" data-reveal>
+        <p class="section-eyebrow">Issued {certification.year}</p>
+        <h3>{certification.title}</h3>
+        <p>{certification.issuer}</p>
+      </article>
+    ))}
+  </div>
+</section>

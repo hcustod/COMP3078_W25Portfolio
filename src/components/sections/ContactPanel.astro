@@ -1,0 +1,41 @@
+---
+import Icon from '../ui/Icon.astro';
+import SectionHeading from './SectionHeading.astro';
+import { siteMeta, socialLinks } from '../../data/site';
+---
+<section class="section-shell shell" id="contact">
+  <SectionHeading
+    eyebrow="Contact"
+    title="Reach out for interviews or deeper project walkthroughs"
+    intro="Contact stays intentionally simple: direct email, profile links, and one-click access to the core documents."
+    align="center"
+  />
+  <div class="contact-panel" data-reveal>
+    <div class="contact-card">
+      <p class="section-eyebrow">Primary contact</p>
+      <h3>{siteMeta.email}</h3>
+      <p>Toronto, Ontario, Canada</p>
+      <div class="contact-actions">
+        <a class="button-primary" href={`mailto:${siteMeta.email}`}>
+          <Icon name="mail" class="h-4 w-4" />
+          <span>Email Henrique</span>
+        </a>
+        <a class="button-secondary" href="/documents/">
+          <Icon name="document" class="h-4 w-4" />
+          <span>Open documents</span>
+        </a>
+      </div>
+    </div>
+    <div class="contact-card">
+      <p class="section-eyebrow">Profiles</p>
+      <div class="social-stack">
+        {socialLinks.map((link) => (
+          <a class="icon-link large" href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noreferrer' : undefined}>
+            <Icon name={link.icon} class="h-5 w-5" />
+            <span>{link.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>

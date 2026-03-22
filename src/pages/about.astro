@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import EducationGrid from '../components/sections/EducationGrid.astro';
+import CertificationsGrid from '../components/sections/CertificationsGrid.astro';
+import SectionHeading from '../components/sections/SectionHeading.astro';
+import DocumentList from '../components/sections/DocumentList.astro';
+import Bio from '../content/personal/bio.md';
+import Philosophy from '../content/personal/philosophy.md';
+import CoverLetterTemplate from '../content/personal/cover-letter-template.md';
+import Icon from '../components/ui/Icon.astro';
+import { documents, siteMeta } from '../data/site';
+
+const currentPath = Astro.url.pathname;
+const anchors = [
+  { id: 'personal', label: 'Personal' },
+  { id: 'academic', label: 'Academic' },
+  { id: 'credentials', label: 'Certifications' },
+  { id: 'documents', label: 'Documents' },
+];
+---
+<BaseLayout
+  currentPath={currentPath}
+  title="About | Henrique Custodio"
+  description="Bio, academic background, certifications, and supporting documents."
+>
+  <section class="section-shell shell page-hero" id="personal">
+    <SectionHeading
+      eyebrow="About"
+      title="Background, credentials, and supporting material"
+      intro="This page collects the personal side of the portfolio: bio, career direction, academic background, certifications, and the core downloads."
+    />
+    <div class="anchor-nav" data-reveal>
+      {anchors.map((anchor) => (
+        <a class="filter-chip" href={`#${anchor.id}`}>{anchor.label}</a>
+      ))}
+    </div>
+    <div class="two-column-grid">
+      <article class="glass-card" data-reveal>
+        <h3>Quick access</h3>
+        <div class="stack-actions">
+          <a class="button-primary" href={siteMeta.resumePath} target="_blank" rel="noreferrer">
+            <Icon name="download" class="h-4 w-4" />
+            <span>Open resume PDF</span>
+          </a>
+          <a class="button-secondary" href="/academic-projects/">
+            <Icon name="arrow" class="h-4 w-4" />
+            <span>Explore work</span>
+          </a>
+          <a class="button-secondary" href="#documents">
+            <Icon name="document" class="h-4 w-4" />
+            <span>Open documents</span>
+          </a>
+        </div>
+      </article>
+      <article class="glass-card prose-card" data-reveal>
+        <h3>Bio</h3>
+        <Bio />
+      </article>
+    </div>
+  </section>
+
+  <section class="section-shell shell">
+    <div class="two-column-grid">
+      <article class="glass-card prose-card" data-reveal>
+        <h3>Career philosophy statement</h3>
+        <Philosophy />
+      </article>
+      <article class="glass-card prose-card" data-reveal>
+        <h3>Cover letter template preview</h3>
+        <CoverLetterTemplate />
+      </article>
+    </div>
+  </section>
+
+  <EducationGrid
+    sectionId="academic"
+    title="Academic background and program context"
+    intro="Degrees, coursework, and academic highlights kept together so background material is easy to scan."
+  />
+
+  <CertificationsGrid
+    sectionId="credentials"
+    title="Technical certifications"
+    intro="Industry credentials that complement the academic side of the portfolio."
+  />
+
+  <DocumentList
+    sectionId="documents"
+    title="Core documents"
+    intro="Resume, written material, academic summary, and capstone outline in one place."
+    items={documents}
+  />
+</BaseLayout>

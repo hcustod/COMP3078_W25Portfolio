@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '../ui/Icon.astro';
+import { siteMeta } from '../../data/site';
+
+interface Props {
+  currentPath?: string;
+}
+
+const { currentPath = '/' } = Astro.props;
+
+const primaryLinks = [
+  { label: 'Home', href: '/', matches: ['/'] },
+  { label: 'Work', href: '/academic-projects/', matches: ['/academic-projects/', '/professional/', '/capstone/'] },
+  { label: 'About', href: '/about/', matches: ['/about/', '/academic-credentials/', '/documents/'] },
+  { label: 'Contact', href: '/#contact', matches: [] },
+] as const;
+
+const isPathActive = (href: string, matches: readonly string[]) => href === '/'
+  ? currentPath === '/'
+  : href.startsWith('/#')
+    ? false
+    : matches.some((match) => currentPath.startsWith(match));
+---
+<header class="site-header">
+  <div class="shell">
+    <div class="nav-shell">
+      <a class="brand-lockup" href="/" aria-label="Go to the homepage">
+        <span class="brand-mark">
+          <Image src={siteMeta.logo} alt="Henrique Custodio logo" width={40} height={40} />
+        </span>
+        <span class="brand-copy">
+          <strong>Henrique Custodio</strong>
+          <span>Portfolio</span>
+        </span>
+      </a>
+
+      <div class="nav-actions">
+        <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-nav-toggle>
+          <span>Menu</span>
+        </button>
+
+        <nav id="site-nav" class="nav-links" data-nav-drawer>
+          {primaryLinks.map((item) => (
+            <a class:list={['nav-link', isPathActive(item.href, item.matches) && 'is-active']} href={item.href}>
+              <span>{item.label}</span>
+            </a>
+          ))}
+        </nav>
+
+        <a class="nav-cta" href={siteMeta.resumePath} target="_blank" rel="noreferrer">
+          <span>Resume</span>
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      </div>
+    </div>
+  </div>
+</header>

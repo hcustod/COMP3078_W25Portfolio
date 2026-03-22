@@ -1,0 +1,41 @@
+---
+import { Image } from 'astro:assets';
+import SectionHeading from './SectionHeading.astro';
+import { skillGroups } from '../../data/site';
+
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  intro?: string;
+  sectionId?: string;
+}
+
+const {
+  eyebrow = 'Skills',
+  title = 'Technical range across software, cloud, and systems work',
+  intro = 'Grouped for fast scanning across languages, frameworks, infrastructure, and tooling.',
+  sectionId,
+} = Astro.props;
+---
+<section class="section-shell shell" id={sectionId}>
+  <SectionHeading
+    eyebrow={eyebrow}
+    title={title}
+    intro={intro}
+  />
+  <div class="card-grid card-grid-wide">
+    {skillGroups.map((group) => (
+      <article class="glass-card" data-reveal>
+        <h3>{group.title}</h3>
+        <div class="skill-cloud">
+          {group.items.map((item) => (
+            <div class="skill-pill">
+              <Image src={item.icon} alt={item.name} width={40} height={40} />
+              <span>{item.name}</span>
+            </div>
+          ))}
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
