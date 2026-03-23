@@ -144,7 +144,6 @@ export const education = [
     link: 'https://www.georgebrown.ca/',
     coursework: [
       'Object-oriented programming in Java and C#.',
-      'Agile team delivery with Git and Jira.',
       'Data structures, algorithms, and performance analysis.',
       'Database-backed web application development.',
       'Linux fundamentals, shell scripting, and operating systems.',
@@ -271,21 +270,21 @@ export const documents: PortfolioDocument[] = [
     title: 'Resume',
     path: siteMeta.resumePath,
     type: 'PDF',
-    summary: 'Current 2026 resume used by the homepage and document links.',
+    summary: '',
     category: 'personal',
   },
   {
     title: 'Cover Letter',
     path: siteMeta.coverLetterPath,
     type: 'PDF',
-    summary: 'Cover letter PDF aligned with the current portfolio and resume set.',
+    summary: '',
     category: 'personal',
   },
   {
     title: 'WrenchIT Capstone Documents',
     path: siteMeta.capstoneDocumentsPath,
     type: 'Hub',
-    summary: 'Capstone document shelf with the project vision, requirements, design packet, technology plan, report, and final deck.',
+    summary: '',
     category: 'capstone',
   },
 ];
